@@ -1,0 +1,22 @@
+{
+  "dependencies": {
+    "express": "^4.21.1"
+  },
+  "devDependencies": {
+    "@types/express": "^5.0.0",
+    "@types/node": "^22.7.5",
+    "ts-node": "^10.9.2",
+    "tsc-watch": "^6.2.0",
+    "typescript": "^5.6.3"
+  },
+  "name": "margdarshak",
+  "description": "mentor connect app for Smart India Hackathon 2024",
+  "version": "1.0.0",
+  "main": "server.ts",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "tsc-watch --onSuccess \"node dist/server.js\" "
+  },
+  "author": "",
+  "license": "ISC"
+}
