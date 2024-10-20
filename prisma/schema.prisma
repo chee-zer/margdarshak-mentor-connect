@@ -18,7 +18,8 @@ model User {
   name String
   phone BigInt @unique
   email String @unique
-  password String
+  hashedPassword String
+  salt String
   verificationStatus Boolean
   tokens Token[] 
   createdAt DateTime
@@ -31,6 +32,13 @@ model Token {
   user User @relation(fields: [userID], references: [id])
   userID String @unique
   token_value String
+}
+
+model Session {
+  id String @default(uuid())
+  sid String @unique
+  data String
+  expiresAt DateTime
 }
 
 enum Role {
