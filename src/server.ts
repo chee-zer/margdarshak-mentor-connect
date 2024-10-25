@@ -3,6 +3,7 @@ const dotenv = require("dotenv").config();
 import { PrismaSessionStore } from "@quixo3/prisma-session-store";
 const prisma = require("./db/prisma");
 const authRouter = require("./routes/auth");
+const passport = require("passport");
 
 import session from "express-session";
 const app = express();
@@ -21,15 +22,17 @@ app.use(
     saveUninitialized: false,
     store: new PrismaSessionStore(prisma, {
       checkPeriod: 2 * 60 * 1000, //2 days
-      dbRecordIdIsSessionId: true, //dont care enough to know what these options do,
-      dbRecordIdFunction: undefined, //but these are the default options.
+      dbRecordIdIsSessionId: true,
+      dbRecordIdFunction: undefined,
     }),
   })
 );
 
-console.log(process.env);
+// Initialize Passport and restore authentication state, if any, from the session.
+app.use(passport.initialize());
+app.use(passport.session());
 
-app.use("/", authRouter);
+app.use("/auth", authRouter);
 
 app.get("/", (req: Request, res: Response) => {
   res.send("hi");
