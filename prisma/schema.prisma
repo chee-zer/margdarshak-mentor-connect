@@ -21,10 +21,63 @@ model User {
   hashedPassword String
   salt String
   verificationStatus Boolean
-  tokens Token[] 
   createdAt DateTime
   updatedAt DateTime
   role Role 
+
+  tokens Token[] 
+  Profile Profile[]
+  notifications Notification[]
+}
+
+model Profile {
+  id String @id @default(uuid())
+  user User @relation(fields: [userID], references: [id])
+  userID String @unique
+  occupation String?
+  about String?
+  linkedinUrl String?
+  githubUrl String?
+  dribbleUrl String?
+  youtubeChannel String?
+  employmentStatus Boolean?
+  employedSince Int?
+  profileCompletionPercentage Int @default(0)
+
+  educations Education[]
+  experiences Experience[]
+}
+
+model Notification {
+  id String @id @default(uuid())
+  user User @relation(fields: [userID], references: [id])
+  redirectUrl String
+  userID String
+  message String
+}
+
+model Education {
+  id String @id @default(uuid())
+  profile Profile @relation(fields: [profileID], references: [id])
+  profileID String 
+  degree String
+  startDate DateTime
+  endDate DateTime
+  location String
+  description String
+
+}
+
+model Experience {
+  id String @id @default(uuid())
+  profile Profile @relation(fields: [profileID], references: [id])
+  profileID String 
+  jobTitle String
+  startDate DateTime
+  endDate DateTime
+  companyName String
+  description String
+
 }
 
 model Token {
